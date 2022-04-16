@@ -31,6 +31,24 @@ You may use it to connect to the project servers like
 ssh -F files/ssh_config server-0
 ```
 
+## Ansible
+
+Ansible configuration is under the `./ansible/` folder.
+Terraform writes inventory in the `./ansible/inventory/hosts` file.
+
+To execute Ansible, change directory to `./ansible/` as follows:
+```
+cd ansible/
+ansible -m ping all
+```
+Output:
+```
+server-0 | SUCCESS => {
+...
+    "ping": "pong"
+}
+```
+
 ## Caveats
 
 https://releases.hashicorp.com/terraform/ is blocking access (from Russia?).
