@@ -11,3 +11,7 @@
 1. Set `region`, `az_zone`, `volume_type`, `subnet_cidr`, `selectel_tform_passwd`
    in `vars.tf`.
 1. Set desired manages server count as `server_count` in `vars.tf`.
+
+## Caveats
+
+https://releases.hashicorp.com/terraform/ is blocking access (from Russia?).
