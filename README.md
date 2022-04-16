@@ -1,1 +1,1 @@
-# selectel_exercise
+# Selectel Exercise
