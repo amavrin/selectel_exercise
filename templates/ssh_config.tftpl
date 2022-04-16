@@ -2,11 +2,15 @@ Host ${management_server.name}
   HostName ${management_server_ip.address}
   User root
   IdentityFile ${private_key_file}
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
 
 %{ for i in range(server_count) ~}
 Host ${work_servers[i].name}
   HostName ${work_server_ips[i].address}
   User root
   IdentityFile ${private_key_file}
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
 
 %{ endfor ~}
