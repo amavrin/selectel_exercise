@@ -1,7 +1,12 @@
-%{ for i in range(server_count) ~}
-Host ${servers[i].name}
-  HostName ${ips[i].address}
+Host ${management_server.name}
+  HostName ${management_server_ip.address}
   User root
-  # set this to the real identity file
-  IdentityFile ~/.ssh/selectel_id_rsa
+  IdentityFile ${private_key_file}
+
+%{ for i in range(server_count) ~}
+Host ${work_servers[i].name}
+  HostName ${work_server_ips[i].address}
+  User root
+  IdentityFile ${private_key_file}
+
 %{ endfor ~}

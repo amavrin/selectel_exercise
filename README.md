@@ -12,8 +12,24 @@
    in `vars.tf`.
 1. Set desired manages server count as `server_count` in `vars.tf`.
 1. Generate key pair. Set public key value in variable `public_key`
-   in `keys.tf`. Set filename of private key in `templates/ssh_config.tftpl`
-   as `IdentityFile`.
+   in `keys.tf`. Set filename of private key in `vars.tf` as `private_key_file`.
+1. Make sure project quota allows for the required amount of floating IPs.
+
+## Init, plan and apply
+
+As usual, execute
+```
+terraform init
+terraform plan
+terraform apply
+```
+Note you may need a VPN to install Terraform providers.
+
+After execution if successful find the `file/ssh_config`.
+You may use it to connect to the project servers like
+```
+ssh -F files/ssh_config server-0
+```
 
 ## Caveats
 

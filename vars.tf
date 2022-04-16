@@ -21,3 +21,7 @@ variable "selectel_tform_passwd" {
 variable "server_count" {
   default = 3
 }
+# Private key file
+variable "private_key_file" {
+  default = "~/.ssh/selectel_id_rsa"
+}
