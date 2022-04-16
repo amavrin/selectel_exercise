@@ -36,6 +36,7 @@ resource "openstack_compute_instance_v2" "server_tf" {
   flavor_id = openstack_compute_flavor_v2.server_flavor.id
   key_pair = openstack_compute_keypair_v2.key_tf.id
   availability_zone = var.az_zone
+  user_data       = "#cloud-config\nhostname: server-${count.index}"
   network {
     uuid = openstack_networking_network_v2.network_tf.id
   }

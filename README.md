@@ -11,6 +11,9 @@
 1. Set `region`, `az_zone`, `volume_type`, `subnet_cidr`, `selectel_tform_passwd`
    in `vars.tf`.
 1. Set desired manages server count as `server_count` in `vars.tf`.
+1. Generate key pair. Set public key value in variable `public_key`
+   in `keys.tf`. Set filename of private key in `templates/ssh_config.tftpl`
+   as `IdentityFile`.
 
 ## Caveats
 
