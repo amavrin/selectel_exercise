@@ -5,8 +5,8 @@ variable "public_key" {
 
 # Creating the SSH key
 resource "openstack_compute_keypair_v2" "key_tf" {
-  name       = "key_tf"
-  region     = var.region
+  name = "key_tf"
+  region = var.region
   public_key = var.public_key
 }
 

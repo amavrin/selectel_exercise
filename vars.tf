@@ -17,3 +17,7 @@ variable "subnet_cidr" {
 # tfuser's password, set in env var
 variable "selectel_tform_passwd" {
 }
+# Managed servers count
+variable "server_count" {
+  default = 3
+}
