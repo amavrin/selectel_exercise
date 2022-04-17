@@ -1,23 +1,23 @@
-- name: download Prometheus
+- name: Download Prometheus
   get_url:
     url: https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
     dest: /tmp
 
-- name: unarchive prometheus
+- name: Unarchive Prometheus
   unarchive:
     remote_src: true
     src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
     dest: /tmp
 
-- name: create prometheus group
+- name: Create prometheus group
   group:
     name: prometheus
 
-- name: create prometheus users
+- name: Create prometheus users
   user:
     name: prometheus
 
-- name: create prometheus directories
+- name: Create Prometheus directories
   file:
     path: "{{ item }}"
     state: directory
@@ -27,7 +27,7 @@
     - /etc/prometheus
     - /var/lib/prometheus
 
-- name: Install binaries to /usr/local/bin
+- name: Install Prometheus binaries to /usr/local/bin
   copy:
     src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/{{ item }}
     dest: /usr/local/bin/{{ item }}
@@ -39,7 +39,7 @@
     - prometheus
     - promtool
 
-- name: Install prometheus files to /etc/prometheus
+- name: Install Prometheus files to /etc/prometheus
   copy:
     src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/{{ item }}
     dest: /etc/prometheus
@@ -51,14 +51,14 @@
     - consoles
     - console_libraries
 
-- name: install prometheus config file
+- name: Install Prometheus config file
   template:
     src: prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml
   tags:
     - config_file
 
-- name: install unit file to systemd
+- name: Install unit file to Systemd
   copy:
     src: prometheus.service
     dest: /etc/systemd/system/prometheus.service
@@ -66,7 +66,7 @@
     group: root
     mode: 0644
 
-- name: configure systemd to use service
+- name: Configure Systemd to use service
   systemd:
     daemon_reload: true
     enabled: true

@@ -1,15 +1,15 @@
-- name: download node exporter
+- name: Download Node Exporter
   get_url:
     url: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
     dest: /tmp
 
-- name: unarchive node exporter
+- name: Unarchive Node Exporter
   unarchive:
     remote_src: true
     src: /tmp/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
     dest: /tmp
 
-- name: move node exporter to /usr/local/bin
+- name: Move Node Exporter to /usr/local/bin
   copy:
     src: /tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter
     dest: /usr/local/bin/node_exporter
@@ -25,7 +25,7 @@
     src: web.yml.j2
     dest: /var/node_exporter/web.yml
 
-- name: install unit file to systemd
+- name: Install unit file to Systemd
   copy:
     src: node_exporter.service
     dest: /etc/systemd/system/node_exporter.service
@@ -33,7 +33,7 @@
     group: root
     mode: 0644
 
-- name: configure systemd to use service
+- name: Configure Systemd to use service
   systemd:
     daemon_reload: true
     enabled: true

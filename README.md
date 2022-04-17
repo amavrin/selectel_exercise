@@ -54,12 +54,15 @@ ssh -F files/ssh_config server-0
 Ansible configuration is under the `./ansible/` folder.
 Terraform writes inventory in the `./ansible/inventory/hosts` file.
 
-To execute Ansible, change directory to `./ansible/` and run
-the `setup.yml` playbook:
-```
-cd ansible/
-ansible-playbook playbooks/setup.yml
-```
+1. Check that Prometheus and Node Exporter version
+   set in `ansible/playbooks/setup.yml` suits you.
+
+1. To execute Ansible, change directory to `./ansible/` and run
+   the `setup.yml` playbook:
+   ```
+   cd ansible/
+   ansible-playbook playbooks/setup.yml
+   ```
 
 You may need to wait a bit for ssh to be available on servers.
 
