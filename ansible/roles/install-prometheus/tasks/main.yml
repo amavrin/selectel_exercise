@@ -55,6 +55,8 @@
   template:
     src: prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml
+  tags:
+    - config_file
 
 - name: install unit file to systemd
   copy:

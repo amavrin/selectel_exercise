@@ -6,3 +6,13 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['localhost:9090']
+  - job_name: 'management_server'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9100']
+{% for host in groups['work_servers'] %}
+  - job_name: {{ host }}
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['{{ hostvars[host]["ansible_default_ipv4"]["address"] }}:9100']
+{% endfor %}
