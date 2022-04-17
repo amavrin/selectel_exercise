@@ -8,11 +8,17 @@ scrape_configs:
       - targets: ['localhost:9090']
   - job_name: 'management_server'
     scrape_interval: 5s
+    scheme: https
+    tls_config:
+      ca_file: /etc/prometheus/client_certs/management-server.pem
     static_configs:
       - targets: ['localhost:9100']
 {% for host in groups['work_servers'] %}
   - job_name: {{ host }}
     scrape_interval: 5s
+    scheme: https
+    tls_config:
+      ca_file: /etc/prometheus/client_certs/{{ host }}.pem
     static_configs:
       - targets: ['{{ hostvars[host]["ansible_default_ipv4"]["address"] }}:9100']
 {% endfor %}

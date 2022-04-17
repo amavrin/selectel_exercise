@@ -1,0 +1,9 @@
+- name: Generate keys and certs
+  include_tasks: generate_certs.yml
+  tags:
+    - crypto
+
+- name: Distribute keys and certs
+  include_tasks: copy_certs.yml
+  tags:
+    - crypto

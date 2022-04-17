@@ -1,0 +1,28 @@
+- name: Create private key (RSA, 4096 bits)
+  delegate_to: localhost
+  community.crypto.openssl_privatekey:
+    path: ../files/crypto/{{ inventory_hostname }}.key
+  tags:
+    - crypto
+
+- name: Create CSR
+  delegate_to: localhost
+  community.crypto.openssl_csr_pipe:
+    privatekey_path: ../files/crypto/{{ inventory_hostname }}.key
+    common_name: "{{ inventory_hostname }}"
+    organization_name: Selectel Test Task
+    subject_alt_name:
+      - "DNS:localhost"
+      - "IP:127.0.0.1"
+      - "IP:{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+  register: csr
+
+- name: Create the self-signed certificate
+  delegate_to: localhost
+  community.crypto.x509_certificate:
+    path: ../files/crypto/{{ inventory_hostname }}.pem
+    csr_content: "{{ csr.csr }}"
+    privatekey_path: ../files/crypto/{{ inventory_hostname }}.key
+    provider: selfsigned
+  tags:
+    - crypto

@@ -18,6 +18,13 @@
     group: root
     mode: 0755
 
+- name: Install Node Exporter web config
+  vars:
+    server_name: "{{ inventory_hostname }}"
+  template:
+    src: web.yml.j2
+    dest: /var/node_exporter/web.yml
+
 - name: install unit file to systemd
   copy:
     src: node_exporter.service
@@ -30,5 +37,5 @@
   systemd:
     daemon_reload: true
     enabled: true
-    state: started
+    state: restarted
     name: node_exporter.service

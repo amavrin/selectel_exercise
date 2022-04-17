@@ -1,0 +1,12 @@
+- name: Create certs dir
+  file:
+    path: /etc/prometheus/client_certs/
+    state: directory
+
+- name: Copy client certs
+  copy:
+    src: ../files/crypto/{{ item }}.pem
+    dest: /etc/prometheus/client_certs/
+  with_items:
+    - "{{ groups['work_servers'] }}"
+    - "{{ groups['management_servers'] }}"
