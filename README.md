@@ -5,6 +5,11 @@
 This repo contains Terraform scripts and Ansible playbooks/roles
 for the setup of the required infrastructure.
 
+Servers generated are
+* worker `server-X` servers, where `X` is 0, 1, 2... up to the
+  `server_count` total: `server-0`, `server-1`, ...
+* `management-server` with Prometheus installed.
+
 Steps to set up the system:
 
 1. Create project in Control Panel, set up user
@@ -25,37 +30,36 @@ See below for detailed description.
 
 1. Set `domain_name` to the account number in `provider.tf`.
 1. Set `tenant_id` in `provider.tf` to the project ID.
-1. Set `TF_VAR_selectel_tform_passwd` envirinment variable to `tform` user's
+1. Set `TF_VAR_selectel_tform_passwd` environment variable to `tform` user's
    password
-1. Set `region`, `az_zone`, `volume_type`, `subnet_cidr`, `selectel_tform_passwd`
-   in `vars.tf`.
+1. Set `region`, `az_zone`, `volume_type`, `subnet_cidr` in `vars.tf`.
 1. Set desired manages server count as `server_count` in `vars.tf`.
-1. Generate key pair. Set public key value in variable `public_key`
+1. Generate key pair. Copy the public key value into the variable `public_key`
    in `keys.tf`. Set filename of private key in `vars.tf` as `private_key_file`.
 
 ## Run `terraform init`, `plan` and `apply`
 
-As usual, execute
+Execute
 ```
 terraform init
 terraform plan
 terraform apply
 ```
-Note you may need a VPN to install Terraform providers.
+**Note** you may need a VPN to install Terraform providers.
 
-After execution if successful find the `file/ssh_config`.
-You may use it to connect to the project servers like
-```
-ssh -F files/ssh_config server-0
-```
+Terraform writes 2 files upon successful execution:
+
+1. `files/ssh_config` file, which can be used to connect
+   to the project servers like
+   ```
+   ssh -F files/ssh_config server-0
+   ```
+1.  Ansible inventory in the `./ansible/inventory/hosts` file.
 
 ## Run Ansible playbook
 
-Ansible configuration is under the `./ansible/` folder.
-Terraform writes inventory in the `./ansible/inventory/hosts` file.
-
 1. Check that Prometheus and Node Exporter version
-   set in `ansible/playbooks/setup.yml` suits you.
+   set in `ansible/playbooks/setup.yml` suits your requirements.
 
 1. To execute Ansible, change directory to `./ansible/` and run
    the `setup.yml` playbook:
