@@ -63,10 +63,10 @@ terraform apply
 
 ## Выполнить Ansible playbook
 
-1. При необходимости, поменять вервии Prometheus и Node Exporter,
+1. При необходимости, поменять версии Prometheus и Node Exporter,
    указанные в `ansible/playbooks/setup.yml`.
 
-2. Для наствройки серверов через Ansible, перейти в каталог `./ansible/`
+2. Для настройки серверов через Ansible, перейти в каталог `./ansible/`
    и выполнить плейбук `setup.yml`:
    ```
    cd ansible/

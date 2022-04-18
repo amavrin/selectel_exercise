@@ -25,6 +25,7 @@ See below for detailed description.
 1. Create a project in Selectel CP
 1. Create user `tform` (or adjust `user_name` in `provider.tf`)
 1. Make sure project quota allows for the required amount of floating IPs.
+   Required is number of work server + 1 for management server.
 
 ## Configure Terraform
 
@@ -58,8 +59,8 @@ Terraform writes 2 files upon successful execution:
 
 ## Run Ansible playbook
 
-1. Check that Prometheus and Node Exporter version
-   set in `ansible/playbooks/setup.yml` suits your requirements.
+1. If necessary, set Prometheus and Node Exporter version
+   in `ansible/playbooks/setup.yml`.
 
 1. To execute Ansible, change directory to `./ansible/` and run
    the `setup.yml` playbook:
@@ -78,4 +79,6 @@ http://MANAGEMENT-SERVER-IP:9090/
 
 ## Caveats
 
-https://releases.hashicorp.com/terraform/ is blocking access (from Russia?).
+1. https://releases.hashicorp.com/terraform/ is blocking access (from Russia?).
+1. I decided not to run Ansible via Terraform provisioner to have access to
+   entire inventory in Ansible, not just to the surrent host.
