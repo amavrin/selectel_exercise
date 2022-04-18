@@ -80,5 +80,5 @@ http://MANAGEMENT-SERVER-IP:9090/
 ## Caveats
 
 1. https://releases.hashicorp.com/terraform/ is blocking access (from Russia?).
-1. I decided not to run Ansible via Terraform provisioner to have access to
-   entire inventory in Ansible, not just to the surrent host.
+1. I decided not to run Ansible via Terraform provisioner to have an access to
+   the entire inventory in Ansible, not just the current host.
