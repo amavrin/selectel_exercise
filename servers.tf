@@ -1,21 +1,21 @@
 data "openstack_images_image_v2" "ubuntu_image" {
   most_recent = true
   visibility = "public"
-  name = "Ubuntu 20.04 LTS 64-bit"
+  name = var.server_os
 }
 
 resource "openstack_compute_flavor_v2" "work_server_flavor" {
   name = "work_node"
-  ram = "1024"
-  vcpus = "1"
+  ram = var.work_server_ram_size
+  vcpus = var.work_server_cpu_count
   disk = "0"
   is_public = "false"
 }
 
 resource "openstack_compute_flavor_v2" "management_server_flavor" {
   name = "management_node"
-  ram = "1024"
-  vcpus = "1"
+  ram = var.management_server_ram_size
+  vcpus = var.management_server_cpu_count
   disk = "0"
   is_public = "false"
 }
@@ -23,7 +23,7 @@ resource "openstack_compute_flavor_v2" "management_server_flavor" {
 resource "openstack_blockstorage_volume_v3" "work_server_volume" {
   count = var.server_count
   name = "volume-for-work-server-{count.index}"
-  size = "5"
+  size = var.work_server_volume_size
   image_id = data.openstack_images_image_v2.ubuntu_image.id
   volume_type = var.volume_type
   availability_zone = var.az_zone
@@ -35,7 +35,7 @@ resource "openstack_blockstorage_volume_v3" "work_server_volume" {
 
 resource "openstack_blockstorage_volume_v3" "management_server_volume" {
   name = "volume-for-management-server"
-  size = "5"
+  size = var.management_server_volume_size
   image_id = data.openstack_images_image_v2.ubuntu_image.id
   volume_type = var.volume_type
   availability_zone = var.az_zone
@@ -52,7 +52,7 @@ resource "openstack_compute_instance_v2" "work_server" {
   flavor_id = openstack_compute_flavor_v2.work_server_flavor.id
   key_pair = openstack_compute_keypair_v2.key_tf.id
   availability_zone = var.az_zone
-  user_data       = "#cloud-config\nhostname: work-server-${count.index}"
+  user_data = "#cloud-config\nhostname: work-server-${count.index}"
   network {
     uuid = openstack_networking_network_v2.network_tf.id
   }
@@ -76,7 +76,7 @@ resource "openstack_compute_instance_v2" "management_server" {
   flavor_id = openstack_compute_flavor_v2.management_server_flavor.id
   key_pair = openstack_compute_keypair_v2.key_tf.id
   availability_zone = var.az_zone
-  user_data       = "#cloud-config\nhostname: management-server"
+  user_data = "#cloud-config\nhostname: management-server"
   network {
     uuid = openstack_networking_network_v2.network_tf.id
   }

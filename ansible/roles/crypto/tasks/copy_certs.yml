@@ -2,15 +2,11 @@
   file:
     path: /var/node_exporter/
     state: directory
-  tags:
-    - crypto
 
 - name: Copy generated files to servers
   copy:
     src: ../files/crypto/{{ inventory_hostname }}.{{ item }}
     dest: /var/node_exporter/
-  tags:
-    - crypto
   with_items:
     - key
     - pem

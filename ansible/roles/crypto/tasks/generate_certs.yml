@@ -2,8 +2,6 @@
   delegate_to: localhost
   community.crypto.openssl_privatekey:
     path: ../files/crypto/{{ inventory_hostname }}.key
-  tags:
-    - crypto
 
 - name: Create CSR
   delegate_to: localhost
@@ -24,5 +22,3 @@
     csr_content: "{{ csr.csr }}"
     privatekey_path: ../files/crypto/{{ inventory_hostname }}.key
     provider: selfsigned
-  tags:
-    - crypto
